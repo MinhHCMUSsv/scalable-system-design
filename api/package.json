@@ -1,0 +1,25 @@
+{
+  "name": "scalable-system-design",
+  "version": "1.0.0",
+  "description": "The objective of this project is to build a functional, scalable backend infrastructure from scratch. The requirement is to set up a load-balanced environment with a replicated database architecture.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinhHCMUSsv/scalable-system-design.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MinhHCMUSsv/scalable-system-design/issues"
+  },
+  "homepage": "https://github.com/MinhHCMUSsv/scalable-system-design#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  }
+}
