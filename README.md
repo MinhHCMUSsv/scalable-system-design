@@ -12,7 +12,53 @@ This project demonstrates a functional, scalable backend infrastructure built fr
 ---
 
 ## 2. System Architecture
+```mermaid
+graph TD
+    %% Định nghĩa các Client
+    Client((User / Postman))
 
+    %% Khối Load Balancer
+    subgraph LB_Layer [Load Balancer Layer]
+        Nginx[Nginx Reverse Proxy<br>Port 8080]
+    end
+
+    %% Khối Application
+    subgraph API_Cluster [Application Layer - Express.js]
+        API1[API Node 1<br>Internal Port 3000]
+        API2[API Node 2<br>Internal Port 3000]
+    end
+
+    %% Khối Database
+    subgraph DB_Cluster [Database Layer - PostgreSQL]
+        Master[(Master DB<br>Port 5432)]
+        Slave[(Slave DB<br>Port 5433)]
+    end
+
+    %% Mũi tên tương tác
+    Client -- "HTTP GET/POST<br>http://localhost:8080" --> Nginx
+
+    Nginx -- "Round Robin" --> API1
+    Nginx -- "Round Robin" --> API2
+
+    API1 -- "POST /products<br>(Write)" --> Master
+    API2 -- "POST /products<br>(Write)" --> Master
+
+    API1 -. "GET /products<br>(Read)" .-> Slave
+    API2 -. "GET /products<br>(Read)" .-> Slave
+
+    Master -- "Auto Replication<br>(Sync Data)" --> Slave
+
+    %% Style (Màu sắc) cho các thành phần
+    classDef proxy fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;
+    classDef app fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000;
+    classDef db fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#000;
+    classDef client fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000;
+
+    class Nginx proxy;
+    class API1,API2 app;
+    class Master,Slave db;
+    class Client client;
+```
 
 ---
 
