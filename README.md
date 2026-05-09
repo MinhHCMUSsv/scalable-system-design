@@ -1,5 +1,11 @@
 # Scalable System Design
 
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
+
 ## 1. Project Overview
 This project demonstrates a functional, scalable backend infrastructure built from scratch. It features a load-balanced environment with a replicated database architecture, ensuring high availability and fault tolerance.
 
@@ -160,3 +166,13 @@ export const poolMaster = new Pool({ host: process.env.DB_MASTER_HOST, ... });
 // Slave connection for Reads
 export const poolSlave = new Pool({ host: process.env.DB_SLAVE_HOST, ... });
 ```
+
+## 5. Video Demonstration
+
+**Demo Video Link:** [https://www.youtube.com/watch?v=FJZbS5HlxRw](https://www.youtube.com/watch?v=FJZbS5HlxRw)
+
+In this video, we demonstrate the following features:
+- Initializing the Master-Slave database architecture using Docker Compose.
+- Routing write operations (POST) to the Master DB.
+- Load balancing read operations (GET) across API instances via Nginx (Round Robin).
+- Testing the automated fallback mechanism during simulated API Node failures (Chaos Testing).
