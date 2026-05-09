@@ -16,7 +16,8 @@ app.post('/products', async (req, res) => {
         res.status(201).json({ 
             message: "Đã lưu vào Master", 
             data: result.rows[0], 
-            processed_by: SERVER_ID 
+            processed_by: SERVER_ID,
+            db_node: "master" 
         });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -28,10 +29,20 @@ app.get('/products', async (req, res) => {
         const result = await poolSlave.query('SELECT * FROM products');
         res.status(200).json({ 
             data: result.rows, 
-            processed_by: SERVER_ID 
+            processed_by: SERVER_ID,
+            db_node: "slave"
         });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        try {
+            const fallbackResult = await poolMaster.query('SELECT * FROM products');
+            res.status(200).json({ 
+                data: fallbackResult.rows, 
+                processed_by: SERVER_ID,
+                db_node: "master"
+            });
+        } catch (fallbackErr) {
+            res.status(500).json({ error: fallbackErr.message });
+        }
     }
 });
 
